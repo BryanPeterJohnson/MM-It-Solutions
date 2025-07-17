@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
 const Header = () => {
+  const location = useLocation();
+
   return (
     <header style={styles.header}>
       <div style={styles.container}>
@@ -14,15 +16,31 @@ const Header = () => {
         </Link>
 
         <nav style={styles.nav}>
-          <Link to="/" style={styles.link}>Home</Link>
-          <Link to="/about" style={styles.link}>About</Link>
-          <Link to="/services" style={styles.link}>Services</Link>
-          <Link to="/contact" style={styles.link}>Contact</Link>
+          {navLinks.map(({ path, label }) => (
+            <Link
+              key={path}
+              to={path}
+              style={{
+                ...styles.link,
+                borderBottom: location.pathname === path ? '2px solid #00b4db' : 'none',
+              }}
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>
   );
 };
+
+const navLinks = [
+  { path: '/', label: 'Home' },
+  { path: '/portfolio', label: 'Portfolio' },
+  { path: '/about', label: 'About' },
+  { path: '/services', label: 'Services' },
+  { path: '/contact', label: 'Contact' },
+];
 
 const styles = {
   header: {
@@ -30,11 +48,13 @@ const styles = {
     top: 0,
     width: '100%',
     height: '70px',
-    background: 'transparent',
+    background: 'rgba(0,0,0,0.75)', // Semi-transparent dark for visibility
+    backdropFilter: 'blur(6px)',
     zIndex: 1000,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    transition: 'background 0.3s ease',
   },
   container: {
     maxWidth: '1200px',
@@ -52,7 +72,7 @@ const styles = {
     textDecoration: 'none',
   },
   logoImg: {
-    height: '40px', // Consistent height with nav
+    height: '42px',
     marginRight: '10px',
     filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.4))',
   },
@@ -71,14 +91,15 @@ const styles = {
   nav: {
     display: 'flex',
     alignItems: 'center',
-    gap: '28px',
+    gap: '24px',
   },
   link: {
     textDecoration: 'none',
     color: '#ffffff',
     fontSize: '16px',
     fontWeight: '500',
-    transition: 'color 0.3s ease',
+    paddingBottom: '4px',
+    transition: 'color 0.3s ease, border-bottom 0.3s ease',
   },
 };
 

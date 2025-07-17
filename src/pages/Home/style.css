@@ -205,16 +205,13 @@ body {
 .about-section.with-image {
   padding: 80px 20px;
   background-color: #fff;
-}
-
-.about-section.with-image {
-  background: #fff;
-  padding: 80px 20px;
+  animation: fadeIn 1s ease-in-out both;
 }
 
 .about-container {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row; /* Ensure text left, image right */
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
@@ -224,6 +221,7 @@ body {
 
 .about-text {
   flex: 1 1 500px;
+  order: 1; /* Text on the left */
 }
 
 .about-text h2 {
@@ -240,6 +238,7 @@ body {
 
 .about-image {
   flex: 1 1 400px;
+  order: 2; /* Image on the right */
 }
 
 .about-image img {
@@ -247,6 +246,50 @@ body {
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-text,
+  .about-image {
+    flex: 1 1 100%;
+  }
+
+  .about-text {
+    order: 1; /* Text first on mobile */
+  }
+
+  .about-image {
+    order: 2; /* Image below text */
+    margin-top: 20px;
+    margin-right: 10%;
+  }
+
+  .about-text h2 {
+    font-size: 28px;
+  }
+
+  .about-text p {
+    font-size: 15px;
+  }
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 
 /* Why Choose Us */
